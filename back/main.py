@@ -36,6 +36,7 @@ def choose(message):
         connect = Connect('database.db')
         connect.insert(telegram_id, fio, letter, date)
         bot.send_message(message.chat.id, 'Спасибо! Ваша капсула сохранена!')
+        start_message(message) 
     if message.text == 'Выгрузить данные в XLS':
         connect = Connect('database.db')
         conn = connect.connection
