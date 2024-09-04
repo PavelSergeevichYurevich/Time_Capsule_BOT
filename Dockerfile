@@ -13,3 +13,4 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /app
 CMD ["python", "app.py"]
+EXPOSE 80
