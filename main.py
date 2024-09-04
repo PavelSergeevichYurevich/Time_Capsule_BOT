@@ -1,12 +1,36 @@
 import telebot
 from telebot import types
-from classes import Connect
 from datetime import datetime
 import pandas as pd
+import sqlite3
+
+class Connect():
+    def __init__(self, name:str) -> None:
+        self.connection = sqlite3.connect(name)
+        self.cursor = self.connection.cursor()
+        self.cursor.executescript('''
+            CREATE TABLE IF NOT EXISTS Letters (
+                   user_id INTEGER PRIMARY KEY,
+                   telegram_id INTEGER,
+                   fio TEXT NOT NULL,
+                   letter TEXT NOT NULL,
+                   date TEXT
+            )
+        ''')
+        self.connection.commit()
+                    
+    def insert(self, telegram_id:int, fio:str, letter:str, date:str) -> None:
+        self.cursor = self.connection.cursor()
+        self.cursor.execute('INSERT INTO Letters (telegram_id, fio, letter, date) VALUES (?, ?, ?, ?)', (telegram_id, fio, letter, date))
+        self.connection.commit()
+    
+    def __del__(self):
+        self.connection.close()
 
 token:str = '6909703788:AAH7gSDXAWb9b64VlZNTlp-527GDksG9uPI'
 bot=telebot.TeleBot(token)
 users:dict = {}
+
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
