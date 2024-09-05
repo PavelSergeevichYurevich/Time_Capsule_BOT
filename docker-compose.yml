@@ -1,0 +1,15 @@
+services:
+  web:
+    build: ./front
+    ports:
+      - "80:80"
+    depends_on:
+      - python_app
+
+  python_app:
+    build: ./bot
+    ports:
+      - "5001:5001"
+
+volumes:
+  web_data:
