@@ -1,4 +1,4 @@
-/env
-/pycache__
-/database.db
-/result.xlsx
+/bot/env
+/bot/pycache__
+/bot/database.db
+/bot/result.xlsx
